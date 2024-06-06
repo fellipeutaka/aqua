@@ -1,0 +1,13 @@
+# Since the ".dev.vars" file is gitignored, you can use the ".dev.vars.example" file to
+# build a new ".dev.vars" file when you clone the repo. Keep this file up-to-date
+# when you add new variables to `.dev.vars`.
+
+# This file will be committed to version control, so make sure not to have any
+# secrets in it. If you are cloning this repo, create a copy of this file named
+# ".dev.vars" and populate it with your secrets.
+
+# When adding additional environment variables, the schema in "src/env.ts"
+# should be updated accordingly.
+
+# Database (Postgres)
+DATABASE_URL="postgresql://docker:docker@localhost:5432/postgres"
