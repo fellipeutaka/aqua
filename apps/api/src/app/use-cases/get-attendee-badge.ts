@@ -10,7 +10,7 @@ export class GetAttendeeBadgeUseCase {
   constructor(private attendeesRepository: AttendeesRepository) {}
 
   async execute({ attendeeId, baseURL }: GetAttendeeBadgeUseCaseRequest) {
-    const data = await this.attendeesRepository.findById(attendeeId);
+    const data = await this.attendeesRepository.findByIdWithTitle(attendeeId);
 
     if (!data) {
       throw new ResourceNotFoundError();

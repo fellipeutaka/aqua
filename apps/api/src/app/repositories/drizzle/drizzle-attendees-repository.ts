@@ -32,6 +32,20 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
   }
 
   async findById(attendeeId: string) {
+    const attendee = await this.db
+      .select()
+      .from(attendees)
+      .where(eq(attendees.id, attendeeId))
+      .then((rows) => rows.at(0) ?? null);
+
+    if (!attendee) {
+      return null;
+    }
+
+    return DrizzleAttendeeMapper.toDomain(attendee);
+  }
+
+  async findByIdWithTitle(attendeeId: string) {
     const data = await this.db
       .select({
         attendees,
@@ -74,5 +88,12 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     return {
       attendeeId: attendee.id,
     };
+  }
+
+  async update(attendee: Attendee) {
+    await this.db
+      .update(attendees)
+      .set(DrizzleAttendeeMapper.toDrizzle(attendee))
+      .where(eq(attendees.id, attendee.id));
   }
 }

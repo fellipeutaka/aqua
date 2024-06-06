@@ -5,7 +5,8 @@ export interface AttendeesRepository {
     email: string;
     eventId: string;
   }): Promise<Attendee | null>;
-  findById(attendeeId: string): Promise<{
+  findById(attendeeId: string): Promise<Attendee | null>;
+  findByIdWithTitle(attendeeId: string): Promise<{
     attendee: Attendee;
     event: {
       title: string;
@@ -13,4 +14,5 @@ export interface AttendeesRepository {
   } | null>;
   count(eventId: string): Promise<number>;
   create(attendee: Attendee): Promise<{ attendeeId: string }>;
+  update(attendee: Attendee): Promise<void>;
 }
