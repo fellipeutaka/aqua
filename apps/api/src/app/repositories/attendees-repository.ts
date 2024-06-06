@@ -5,6 +5,12 @@ export interface AttendeesRepository {
     email: string;
     eventId: string;
   }): Promise<Attendee | null>;
+  findById(attendeeId: string): Promise<{
+    attendee: Attendee;
+    event: {
+      title: string;
+    };
+  } | null>;
   count(eventId: string): Promise<number>;
   create(attendee: Attendee): Promise<{ attendeeId: string }>;
 }

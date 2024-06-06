@@ -2,6 +2,7 @@ import { and, count, eq } from "drizzle-orm";
 import type { Attendee } from "~/app/entities/attendee";
 import type { getDb } from "~/infra/database";
 import { attendees } from "~/infra/database/schema/attendee";
+import { events } from "~/infra/database/schema/event";
 import type { AttendeesRepository } from "../attendees-repository";
 import { DrizzleAttendeeMapper } from "./mappers/drizzle-attendee-mapper";
 
@@ -28,6 +29,30 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     }
 
     return DrizzleAttendeeMapper.toDomain(attendee);
+  }
+
+  async findById(attendeeId: string) {
+    const data = await this.db
+      .select({
+        attendees,
+        eventTitle: events.title,
+      })
+      .from(attendees)
+      .where(eq(attendees.id, attendeeId))
+      .leftJoin(events, eq(attendees.eventId, events.id))
+      .then((rows) => rows.at(0) ?? null);
+
+    if (!data) {
+      return null;
+    }
+
+    return {
+      attendee: DrizzleAttendeeMapper.toDomain(data.attendees),
+      event: {
+        // biome-ignore lint/style/noNonNullAssertion: Always guaranteed by the query
+        title: data.eventTitle!,
+      },
+    };
   }
 
   async count(eventId: string) {

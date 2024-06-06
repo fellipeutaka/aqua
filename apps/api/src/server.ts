@@ -2,6 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { apiReference } from "@scalar/hono-api-reference";
 import { cors } from "hono/cors";
 import packageJson from "../package.json";
+import { attendeesRoutes } from "./infra/http/controllers/attendees/routes";
 import { eventsRoutes } from "./infra/http/controllers/events/routes";
 
 const app = new OpenAPIHono();
@@ -30,7 +31,10 @@ app.get(
   }),
 );
 
-const routes = app.route("/events", eventsRoutes);
+const routes = app
+  .route("/events", eventsRoutes)
+  .route("/attendees", attendeesRoutes);
+
 export type AppType = typeof routes;
 
 export default app;
