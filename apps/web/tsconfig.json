@@ -1,0 +1,17 @@
+{
+  "extends": "@aqua/tsconfig/next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/env.js"
+  ],
+  "exclude": ["node_modules"]
+}

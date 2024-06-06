@@ -1,0 +1,22 @@
+{
+  "cSpell.words": [
+    "biomejs",
+    "clsx",
+    "commitlint",
+    "hono",
+    "neondatabase",
+    "nextjs",
+    "openapi",
+    "sonner",
+    "tailwindcss"
+  ],
+  "editor.defaultFormatter": "biomejs.biome",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.associations": {
+    "**/*.env*": "env",
+    "*.vars": "env",
+    "*.vars.example": "env"
+  }
+}

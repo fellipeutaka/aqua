@@ -1,0 +1,43 @@
+{
+  "name": "@aqua/api",
+  "description": "Aqua API",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/server.ts"
+  },
+  "version": "1.0.0",
+  "author": {
+    "name": "fellipeutaka@gmail.com",
+    "email": "fellipeutaka@gmail.com",
+    "url": "https://fellipeutaka.vercel.app"
+  },
+  "scripts": {
+    "tsx": "tsx --env-file=.dev.vars",
+    "drizzle": "node --env-file=.dev.vars ./node_modules/drizzle-kit/bin.cjs",
+    "dev": "wrangler dev src/server.ts",
+    "deploy": "wrangler deploy --minify src/server.ts",
+    "db:generate": "pnpm drizzle generate",
+    "db:migrate": "pnpm tsx src/infra/database/migrate.ts",
+    "db:seed": "pnpm tsx src/infra/database/seed.ts",
+    "db:drop": "pnpm drizzle drop",
+    "db:pull": "pnpm drizzle introspect",
+    "db:push": "pnpm drizzle push",
+    "db:studio": "pnpm drizzle studio",
+    "db:check": "pnpm drizzle check",
+    "db:metadata": "pnpm drizzle up"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "^0.14.2",
+    "@neondatabase/serverless": "^0.9.3",
+    "@scalar/hono-api-reference": "^0.5.62",
+    "drizzle-orm": "^0.31.1",
+    "hono": "^4.4.3"
+  },
+  "devDependencies": {
+    "@aqua/tsconfig": "workspace:*",
+    "drizzle-kit": "^0.22.2",
+    "tsx": "^4.12.0",
+    "wrangler": "^3.59.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@aqua/ui",
+  "private": true,
+  "exports": {
+    "./*": "./src/*.tsx"
+  },
+  "dependencies": {
+    "sonner": "^1.4.41"
+  },
+  "devDependencies": {
+    "@aqua/tailwind": "workspace:*",
+    "@aqua/tsconfig": "workspace:*",
+    "@types/react": "^18.3.3",
+    "react": "rc"
+  },
+  "peerDependencies": {
+    "@aqua/tailwind": ">=0",
+    "react": "rc",
+    "react-dom": "rc"
+  }
+}
