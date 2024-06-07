@@ -23,7 +23,7 @@ export const getEventAttendees = new OpenAPIHono().openapi(
           .nullish()
           .default("0")
           .transform(Number)
-          .pipe(z.number().int().positive()),
+          .pipe(z.number().int().gte(0)),
       }),
     },
     responses: {
