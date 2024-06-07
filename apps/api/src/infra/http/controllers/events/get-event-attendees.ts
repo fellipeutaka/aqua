@@ -1,19 +1,29 @@
 import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
+import { DrizzleAttendeesRepository } from "~/app/repositories/drizzle/drizzle-attendees-repository";
 import { DrizzleEventsRepository } from "~/app/repositories/drizzle/drizzle-events-repository";
 import { ResourceNotFoundError } from "~/app/use-cases/errors/resource-not-found-error";
-import { GetEventByIdUseCase } from "~/app/use-cases/get-event-by-id";
+import { GetOffsetPaginatedAttendeesUseCase } from "~/app/use-cases/get-offset-paginated-attendees";
 import { getDb } from "~/infra/database";
 import { tags } from "~/utils/tags";
 
-export const getEvent = new OpenAPIHono().openapi(
+export const getEventAttendees = new OpenAPIHono().openapi(
   createRoute({
-    summary: "Get an event",
+    summary: "Get event attendees",
     tags: [tags.events],
     method: "get",
-    path: "/:eventId",
+    path: "/:eventId/attendees",
     request: {
       params: z.object({
         eventId: z.string().uuid(),
+      }),
+      query: z.object({
+        query: z.string().nullish().default(null),
+        pageIndex: z
+          .string()
+          .nullish()
+          .default("0")
+          .transform(Number)
+          .pipe(z.number().int().positive()),
       }),
     },
     responses: {
@@ -21,11 +31,16 @@ export const getEvent = new OpenAPIHono().openapi(
         content: {
           "application/json": {
             schema: z.object({
-              title: z.string(),
-              slug: z.string(),
-              details: z.string().nullable(),
-              maximumAttendees: z.number().int().nullable(),
-              attendeesAmount: z.number().int(),
+              attendees: z.array(
+                z.object({
+                  id: z.string().ulid(),
+                  name: z.string(),
+                  email: z.string().email(),
+                  createdAt: z.string().datetime(),
+                  checkInAt: z.string().datetime().nullable(),
+                }),
+              ),
+              total: z.number(),
             }),
           },
         },
@@ -55,24 +70,31 @@ export const getEvent = new OpenAPIHono().openapi(
   }),
   async (c) => {
     const { eventId } = c.req.valid("param");
+    const { pageIndex, query } = c.req.valid("query");
 
     const db = getDb(c);
-    const getEventByIdUseCase = new GetEventByIdUseCase(
+    const getEventByIdUseCase = new GetOffsetPaginatedAttendeesUseCase(
+      new DrizzleAttendeesRepository(db),
       new DrizzleEventsRepository(db),
     );
 
     try {
-      const { event, attendeesAmount } = await getEventByIdUseCase.execute({
+      const { attendees, total } = await getEventByIdUseCase.execute({
         eventId,
+        pageIndex,
+        query,
       });
 
       return c.json(
         {
-          title: event.title,
-          slug: event.slug,
-          details: event.details,
-          maximumAttendees: event.maximumAttendees,
-          attendeesAmount,
+          attendees: attendees.map((attendee) => ({
+            id: attendee.id,
+            name: attendee.name,
+            email: attendee.email,
+            createdAt: attendee.createdAt.toISOString(),
+            checkInAt: attendee.checkInAt?.toISOString() ?? null,
+          })),
+          total,
         },
         200,
       );

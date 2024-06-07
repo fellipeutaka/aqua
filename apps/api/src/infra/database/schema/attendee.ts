@@ -1,4 +1,3 @@
-import { sql } from "drizzle-orm";
 import {
   index,
   pgTable,
@@ -21,10 +20,7 @@ export const attendees = pgTable(
     checkInAt: timestamp("check_in_at"),
   },
   (table) => ({
-    nameIndex: index("name_index").using(
-      "gin",
-      sql`to_tsvector('simple', ${table.name})`,
-    ),
+    nameIndex: index("name_index").on(table.name),
     emailIndex: uniqueIndex("email_index").on(table.email, table.eventId),
   }),
 );

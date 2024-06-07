@@ -30,7 +30,7 @@ export const getAttendeeBadge = new OpenAPIHono().openapi(
         },
         description: "Attendee badge",
       },
-      400: {
+      404: {
         content: {
           "application/json": {
             schema: z.object({
@@ -74,7 +74,7 @@ export const getAttendeeBadge = new OpenAPIHono().openapi(
           {
             message: "Attendee not found.",
           },
-          400,
+          404,
         );
       }
       return c.json(
