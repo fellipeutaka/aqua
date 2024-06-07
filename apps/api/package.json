@@ -32,7 +32,7 @@
     "@neondatabase/serverless": "^0.9.3",
     "@scalar/hono-api-reference": "^0.5.62",
     "drizzle-orm": "^0.31.1",
-    "hono": "^4.4.3"
+    "hono": "^4.4.4"
   },
   "devDependencies": {
     "@aqua/tsconfig": "workspace:*",
