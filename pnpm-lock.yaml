@@ -63,6 +63,9 @@ importers:
       '@aqua/tsconfig':
         specifier: workspace:*
         version: link:../../config/tsconfig
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
       drizzle-kit:
         specifier: ^0.22.2
         version: 0.22.2
@@ -980,6 +983,10 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@faker-js/faker@8.4.1':
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -4758,6 +4765,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.20.2':
     optional: true
+
+  '@faker-js/faker@8.4.1': {}
 
   '@fastify/busboy@2.1.1': {}
 

@@ -26,3 +26,4 @@ export const attendees = pgTable(
 );
 
 export type Attendee = typeof attendees.$inferSelect;
+export type NewAttendee = typeof attendees.$inferInsert;

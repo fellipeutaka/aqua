@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@aqua/tsconfig": "workspace:*",
+    "@faker-js/faker": "^8.4.1",
     "drizzle-kit": "^0.22.2",
     "tsx": "^4.12.0",
     "wrangler": "^3.59.0"
