@@ -1,0 +1,273 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-06-07T04:14:22.802Z",
+  "__export_source": "insomnia.desktop.app:v9.2.0",
+  "resources": [
+    {
+      "_id": "req_82a7b3e3ec9e438db57896abe897f9b9",
+      "parentId": "fld_b73aab81043843b6b8836ca8e527c4ad",
+      "modified": 1717731642440,
+      "created": 1717694938588,
+      "url": "{{ _.url }}/{{ _.resource }}/:eventId",
+      "name": "Get event",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [{ "name": "User-Agent", "value": "insomnia/9.2.0" }],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873104434,
+      "isPrivate": false,
+      "pathParameters": [
+        { "name": "eventId", "value": "c6003fff-51fd-4039-8cdc-27abed5c07ed" }
+      ],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_b73aab81043843b6b8836ca8e527c4ad",
+      "parentId": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "modified": 1717697257570,
+      "created": 1717694938587,
+      "name": "Events",
+      "description": "",
+      "environment": { "resource": "events" },
+      "environmentPropertyOrder": { "&": ["resource"] },
+      "metaSortKey": -1716872757093,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "parentId": null,
+      "modified": 1717694938584,
+      "created": 1717694938584,
+      "name": "Aqua",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_8da938c2722f423fbfcc75e6017b8171",
+      "parentId": "fld_b73aab81043843b6b8836ca8e527c4ad",
+      "modified": 1717733531605,
+      "created": 1717731604920,
+      "url": "{{ _.url }}/{{ _.resource }}/:eventId/attendees",
+      "name": "Get event attendees",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "preRequestScript": "",
+      "parameters": [
+        {
+          "id": "pair_0088c7abaa2b4b61af50354f398c1946",
+          "name": "query",
+          "value": "fel",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "id": "pair_cdc6a9e06d944c4b8628932a4ef1334f",
+          "name": "pageIndex",
+          "value": "1",
+          "description": ""
+        }
+      ],
+      "headers": [{ "name": "User-Agent", "value": "insomnia/9.2.0" }],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873098873.25,
+      "isPrivate": false,
+      "pathParameters": [
+        { "name": "eventId", "value": "5d6ef71c-1c75-40c2-9b43-e79ebe9de09c" }
+      ],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_49e7584d812646f6b5983b2661457b4e",
+      "parentId": "fld_b73aab81043843b6b8836ca8e527c4ad",
+      "modified": 1717732046548,
+      "created": 1717694938588,
+      "url": "{{ _.url }}/{{ _.resource }}",
+      "name": "Create new event",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Curso de TypeScript\",\n  \"details\": \"Um curso da melhor linguagem do mundo\",\n  \"maximumAttendees\": null\n}"
+      },
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "User-Agent", "value": "insomnia/9.2.0" }
+      ],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873082191,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a6e6dba9cb854c2f91e2af7d150297ac",
+      "parentId": "fld_b73aab81043843b6b8836ca8e527c4ad",
+      "modified": 1717733268703,
+      "created": 1717697627983,
+      "url": "{{ _.url }}/{{ _.resource }}/:eventId/attendees",
+      "name": "Register an attendee",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"{% faker 'randomFullName' %}\",\n  \"email\": \"{% faker 'randomEmail' %}\"\n}"
+      },
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "User-Agent", "value": "insomnia/9.2.0" }
+      ],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873076630.25,
+      "isPrivate": false,
+      "pathParameters": [
+        { "name": "eventId", "value": "5d6ef71c-1c75-40c2-9b43-e79ebe9de09c" }
+      ],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0454ba47fa79463fafb4be7501c58cee",
+      "parentId": "fld_896cbf11ad9448d6a6520a1bfa89a308",
+      "modified": 1717731650689,
+      "created": 1717704993836,
+      "url": "{{ _.url }}/{{ _.resource }}/:attendeeId/badge",
+      "name": "Get an attendee badge",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [{ "name": "User-Agent", "value": "insomnia/9.2.0" }],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873104434,
+      "isPrivate": false,
+      "pathParameters": [
+        { "name": "attendeeId", "value": "01HZQC5004DGGYAVVKCBF3XAZM" }
+      ],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_896cbf11ad9448d6a6520a1bfa89a308",
+      "parentId": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "modified": 1717705021564,
+      "created": 1717704993835,
+      "name": "Attendees",
+      "description": "",
+      "environment": { "resource": "attendees" },
+      "environmentPropertyOrder": { "&": ["resource"] },
+      "metaSortKey": -1716872757068,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_8257ad8e53c54757a6e87b2d6d503b85",
+      "parentId": "fld_896cbf11ad9448d6a6520a1bfa89a308",
+      "modified": 1717731653507,
+      "created": 1717706068848,
+      "url": "{{ _.url }}/{{ _.resource }}/:attendeeId/check-in",
+      "name": "Check in",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [{ "name": "User-Agent", "value": "insomnia/9.2.0" }],
+      "authentication": { "type": "none" },
+      "metaSortKey": -1716873093312.5,
+      "isPrivate": false,
+      "pathParameters": [
+        { "name": "attendeeId", "value": "01HZQC6XK49ZD978DDQ4FR36G0" }
+      ],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_c53b79d4bf0349d8bb92bbed2f77c1ce",
+      "parentId": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "modified": 1717694938584,
+      "created": 1717694938584,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": {},
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1716872564862,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_1b8b1eb05f4b4292a8bc42661d3b4c97",
+      "parentId": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "modified": 1717694938586,
+      "created": 1717694938586,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_cf564dff35f14307a2d7eeb7533aa984",
+      "parentId": "wrk_8dfa95e8e69947b18e529b8d4378686a",
+      "modified": 1717694938597,
+      "created": 1717694938596,
+      "fileName": "Aqua",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_8e0e15a13f9345899a42fc0d345bf556",
+      "parentId": "env_c53b79d4bf0349d8bb92bbed2f77c1ce",
+      "modified": 1717694938585,
+      "created": 1717694938585,
+      "name": "Development",
+      "data": { "url": "http://localhost:3333" },
+      "dataPropertyOrder": { "&": ["url"] },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1716873577356,
+      "_type": "environment"
+    }
+  ]
+}

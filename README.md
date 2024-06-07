@@ -1,5 +1,7 @@
 # Aqua
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Aqua&uri=https%3A%2F%2Fraw.githubusercontent.com%2Ffellipeutaka%2Faqua%2Fmain%2F.github%2Fassets%2Finsomnia.json)
+
 Aqua is an application for **managing participants in in-person events**.
 
 The tool allows the organizer to register an event and open a public registration page.
