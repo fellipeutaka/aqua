@@ -3,9 +3,7 @@
   "description": "Aqua API",
   "type": "module",
   "private": true,
-  "exports": {
-    ".": "./src/server.ts"
-  },
+  "types": "./src/server.ts",
   "version": "1.0.0",
   "author": {
     "name": "fellipeutaka@gmail.com",
@@ -17,6 +15,7 @@
     "drizzle": "node --env-file=.dev.vars ./node_modules/drizzle-kit/bin.cjs",
     "dev": "wrangler dev src/server.ts",
     "deploy": "wrangler deploy --minify src/server.ts",
+    "type-check": "tsc --noEmit --incremental false",
     "db:generate": "pnpm drizzle generate",
     "db:migrate": "pnpm tsx src/infra/database/migrate.ts",
     "db:seed": "pnpm tsx src/infra/database/seed.ts",

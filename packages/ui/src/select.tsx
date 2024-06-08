@@ -1,6 +1,6 @@
 "use client";
 
-import { tv } from "@aqua/tailwind";
+import { cn, tv } from "@aqua/tailwind";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Icons } from "./icons";
 
@@ -72,12 +72,14 @@ export const SelectGroup = SelectPrimitive.Group;
 interface SelectTriggerProps
   extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
   placeholder: React.ReactNode;
+  iconClassName?: string;
 }
 
 export function SelectTrigger({
   ref,
   className,
   placeholder,
+  iconClassName,
   ...props
 }: SelectTriggerProps) {
   return (
@@ -92,7 +94,12 @@ export function SelectTrigger({
         }
       />
       <SelectPrimitive.Icon asChild>
-        <Icons.ChevronDown className="size-4 opacity-50 transition-transform duration-200 group-aria-expanded:rotate-180" />
+        <Icons.ChevronDown
+          className={cn(
+            "size-4 opacity-50 transition-transform duration-200 group-aria-expanded:rotate-180",
+            iconClassName,
+          )}
+        />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );

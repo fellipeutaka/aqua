@@ -21,12 +21,18 @@ export const getEventAttendees = new OpenAPIHono().openapi(
           .string()
           .optional()
           .transform((x) => x ?? null),
-        pageIndex: z
+        page: z
           .string()
           .optional()
-          .default("0")
+          .default("1")
           .transform(Number)
-          .pipe(z.number().int().gte(0)),
+          .pipe(z.number().int().positive()),
+        pageSize: z
+          .string()
+          .optional()
+          .default("10")
+          .transform(Number)
+          .pipe(z.number().int().positive().max(50)),
       }),
     },
     responses: {
@@ -73,7 +79,7 @@ export const getEventAttendees = new OpenAPIHono().openapi(
   }),
   async (c) => {
     const { eventId } = c.req.valid("param");
-    const { pageIndex, query } = c.req.valid("query");
+    const { query, page, pageSize } = c.req.valid("query");
 
     const db = getDb(c);
     const getEventByIdUseCase = new GetOffsetPaginatedAttendeesUseCase(
@@ -84,8 +90,9 @@ export const getEventAttendees = new OpenAPIHono().openapi(
     try {
       const { attendees, total } = await getEventByIdUseCase.execute({
         eventId,
-        pageIndex,
         query,
+        page,
+        pageSize,
       });
 
       return c.json(

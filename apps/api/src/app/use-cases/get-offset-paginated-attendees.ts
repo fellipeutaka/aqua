@@ -4,8 +4,9 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface GetOffsetPaginatedAttendeesUseCaseRequest {
   eventId: string;
-  pageIndex: number;
   query: string | null;
+  page: number;
+  pageSize?: number;
 }
 
 export class GetOffsetPaginatedAttendeesUseCase {
@@ -16,8 +17,9 @@ export class GetOffsetPaginatedAttendeesUseCase {
 
   async execute({
     eventId,
-    pageIndex,
     query,
+    page,
+    pageSize,
   }: GetOffsetPaginatedAttendeesUseCaseRequest) {
     const event = await this.eventsRepository.findById(eventId);
 
@@ -28,8 +30,9 @@ export class GetOffsetPaginatedAttendeesUseCase {
     const [attendees, total] = await Promise.all([
       this.attendeesRepository.findManyWithOffset({
         eventId,
-        pageIndex,
         query,
+        page,
+        pageSize,
       }),
       this.attendeesRepository.count(eventId),
     ]);

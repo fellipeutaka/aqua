@@ -1,18 +1,18 @@
 import { and, count, desc, eq, ilike } from "drizzle-orm";
-import type { Attendee } from "~/app/entities/attendee";
 import type { getDb } from "~/infra/database";
 import { attendees } from "~/infra/database/schema/attendee";
 import { events } from "~/infra/database/schema/event";
 import type { AttendeesRepository } from "../attendees-repository";
 import { DrizzleAttendeeMapper } from "./mappers/drizzle-attendee-mapper";
 
+type Props<T extends keyof AttendeesRepository> = Parameters<
+  AttendeesRepository[T]
+>[0];
+
 export class DrizzleAttendeesRepository implements AttendeesRepository {
   constructor(private readonly db: ReturnType<typeof getDb>) {}
 
-  async findByEmail(props: {
-    email: string;
-    eventId: string;
-  }) {
+  async findByEmail(props: Props<"findByEmail">) {
     const attendee = await this.db
       .select({
         id: attendees.id,
@@ -40,7 +40,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     });
   }
 
-  async findById(attendeeId: string) {
+  async findById(attendeeId: Props<"findById">) {
     const attendee = await this.db
       .select()
       .from(attendees)
@@ -54,7 +54,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     return DrizzleAttendeeMapper.toDomain(attendee);
   }
 
-  async findByIdWithTitle(attendeeId: string) {
+  async findByIdWithTitle(attendeeId: Props<"findByIdWithTitle">) {
     const data = await this.db
       .select({
         attendees,
@@ -78,15 +78,13 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     };
   }
 
-  async findManyWithOffset(props: {
-    eventId: string;
-    query: string | null;
-    pageIndex: number;
-  }) {
+  async findManyWithOffset(props: Props<"findManyWithOffset">) {
     const defaultWhere = eq(attendees.eventId, props.eventId);
     const where = props.query
       ? and(ilike(attendees.name, `%${props.query}%`), defaultWhere)
       : defaultWhere;
+
+    const pageSize = props.pageSize ?? 10;
 
     const data = await this.db
       .select({
@@ -98,8 +96,8 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
       })
       .from(attendees)
       .where(where)
-      .limit(10)
-      .offset(props.pageIndex * 10)
+      .limit(pageSize)
+      .offset((props.page - 1) * pageSize)
       .orderBy(desc(attendees.createdAt));
 
     return data.map((data) =>
@@ -107,7 +105,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     );
   }
 
-  async count(eventId: string) {
+  async count(eventId: Props<"count">) {
     const [{ data }] = await this.db
       .select({
         data: count(attendees.id),
@@ -118,10 +116,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     return data;
   }
 
-  async countWithQuery(props: {
-    eventId: string;
-    query: string | null;
-  }) {
+  async countWithQuery(props: Props<"countWithQuery">) {
     const defaultWhere = eq(attendees.eventId, props.eventId);
     const where = props.query
       ? and(ilike(attendees.name, `%${props.query}%`), defaultWhere)
@@ -137,7 +132,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     return data;
   }
 
-  async create(attendee: Attendee) {
+  async create(attendee: Props<"create">) {
     await this.db
       .insert(attendees)
       .values(DrizzleAttendeeMapper.toDrizzle(attendee));
@@ -147,7 +142,7 @@ export class DrizzleAttendeesRepository implements AttendeesRepository {
     };
   }
 
-  async update(attendee: Attendee) {
+  async update(attendee: Props<"update">) {
     await this.db
       .update(attendees)
       .set(DrizzleAttendeeMapper.toDrizzle(attendee))

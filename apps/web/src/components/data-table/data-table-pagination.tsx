@@ -24,7 +24,7 @@ export function DataTablePagination<TData>({
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <div className="flex flex-col-reverse items-center gap-4 sm:flex-row lg:gap-8 sm:gap-6">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-2">
           <p className="whitespace-nowrap font-medium text-sm">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
@@ -34,7 +34,8 @@ export function DataTablePagination<TData>({
           >
             <SelectTrigger
               placeholder={table.getState().pagination.pageSize}
-              className="h-8 w-[4.5rem] select-none"
+              className="h-8 select-none"
+              iconClassName="ml-2.5"
             />
             <SelectContent side="top">
               {pageSizeOptions.map((pageSize) => (
@@ -49,7 +50,7 @@ export function DataTablePagination<TData>({
           Page {table.getState().pagination.pageIndex + 1} of{" "}
           {table.getPageCount()}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-1">
           <Button
             aria-label="Go to first page"
             variant="outline"

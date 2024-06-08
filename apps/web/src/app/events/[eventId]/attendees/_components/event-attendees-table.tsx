@@ -9,6 +9,7 @@ import { columns } from "./event-attendees-table-columns";
 
 interface EventAttendeesTableProps {
   data: Awaited<ReturnType<typeof getEventAttendees>>;
+  pageSize: number;
 }
 
 const filterFields: DataTableFilterField<Attendee>[] = [
@@ -19,14 +20,18 @@ const filterFields: DataTableFilterField<Attendee>[] = [
   },
 ];
 
-export function EventAttendeesTable({ data }: EventAttendeesTableProps) {
+export function EventAttendeesTable({
+  data,
+  pageSize,
+}: EventAttendeesTableProps) {
   const { attendees, total } = data;
 
   const { table } = useDataTable({
     data: attendees,
     columns,
-    pageCount: Math.ceil(total / 10),
+    pageCount: Math.ceil(total / pageSize),
     filterFields,
+    defaultPerPage: pageSize,
   });
 
   return (

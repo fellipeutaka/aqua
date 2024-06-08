@@ -15,7 +15,8 @@ export interface AttendeesRepository {
   findManyWithOffset(props: {
     eventId: string;
     query: string | null;
-    pageIndex: number;
+    page: number;
+    pageSize?: number;
   }): Promise<Attendee[]>;
   count(eventId: string): Promise<number>;
   countWithQuery(props: {

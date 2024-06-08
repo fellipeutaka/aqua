@@ -3,20 +3,22 @@ import { api } from "~/lib/hono";
 export interface GetEventAttendeesProps {
   eventId: string;
   query?: string;
-  pageIndex: string;
+  page: string;
+  pageSize?: string;
 }
 
 export async function getEventAttendees({
   eventId,
   query,
-  pageIndex,
+  page,
+  pageSize,
 }: GetEventAttendeesProps) {
   const response = await api.events[":eventId"].attendees.$get(
     {
       param: {
         eventId,
       },
-      query: { query, pageIndex },
+      query: { query, page, pageSize },
     },
     {
       init: {

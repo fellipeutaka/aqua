@@ -1,10 +1,13 @@
 import { count, eq } from "drizzle-orm";
-import type { Event } from "~/app/entities/event";
 import type { getDb } from "~/infra/database";
 import { attendees } from "~/infra/database/schema/attendee";
 import { events } from "~/infra/database/schema/event";
 import type { EventsRepository } from "../events-repository";
 import { DrizzleEventMapper } from "./mappers/drizzle-event-mapper";
+
+type Props<T extends keyof EventsRepository> = Parameters<
+  EventsRepository[T]
+>[0];
 
 export class DrizzleEventsRepository implements EventsRepository {
   constructor(private readonly db: ReturnType<typeof getDb>) {}
@@ -15,7 +18,7 @@ export class DrizzleEventsRepository implements EventsRepository {
     return data.map(DrizzleEventMapper.toDomain);
   }
 
-  async findById(eventId: string) {
+  async findById(eventId: Props<"findById">) {
     const event = await this.db
       .select()
       .from(events)
@@ -29,7 +32,9 @@ export class DrizzleEventsRepository implements EventsRepository {
     return DrizzleEventMapper.toDomain(event);
   }
 
-  async findByIdWithAttendeesAmount(eventId: string) {
+  async findByIdWithAttendeesAmount(
+    eventId: Props<"findByIdWithAttendeesAmount">,
+  ) {
     const event = await this.db
       .select({
         id: events.id,
@@ -55,7 +60,7 @@ export class DrizzleEventsRepository implements EventsRepository {
     };
   }
 
-  async findBySlug(slug: string) {
+  async findBySlug(slug: Props<"findBySlug">) {
     const event = await this.db
       .select()
       .from(events)
@@ -69,7 +74,7 @@ export class DrizzleEventsRepository implements EventsRepository {
     return DrizzleEventMapper.toDomain(event);
   }
 
-  async create(event: Event) {
+  async create(event: Props<"create">) {
     await this.db.insert(events).values(DrizzleEventMapper.toDrizzle(event));
 
     return { eventId: event.id };
