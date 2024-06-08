@@ -17,10 +17,13 @@ export const getEventAttendees = new OpenAPIHono().openapi(
         eventId: z.string().uuid(),
       }),
       query: z.object({
-        query: z.string().nullish().default(null),
+        query: z
+          .string()
+          .optional()
+          .transform((x) => x ?? null),
         pageIndex: z
           .string()
-          .nullish()
+          .optional()
           .default("0")
           .transform(Number)
           .pipe(z.number().int().gte(0)),

@@ -8,7 +8,8 @@
     "nextjs",
     "openapi",
     "sonner",
-    "tailwindcss"
+    "tailwindcss",
+    "tanstack"
   ],
   "editor.defaultFormatter": "biomejs.biome",
   "typescript.enablePromptUseWorkspaceTsdk": true,

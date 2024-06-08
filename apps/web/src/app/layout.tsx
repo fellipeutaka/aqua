@@ -1,5 +1,7 @@
 import { cn } from "@aqua/tailwind";
 import type { Metadata, Viewport } from "next";
+import { SiteFooter } from "~/components/site-footer";
+import { SiteHeader } from "~/components/site-header";
 import { fonts } from "~/config/fonts";
 import { siteConfig } from "~/config/site";
 
@@ -16,8 +18,8 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
   authors: {
-    name: siteConfig.name,
-    url: siteConfig.url,
+    name: siteConfig.author.name,
+    url: siteConfig.author.url,
   },
   twitter: {
     creator: "@fellipeutaka",
@@ -31,21 +33,19 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body
         className={cn(
-          "bg-background font-sans text-foreground antialiased",
+          "grid min-h-screen grid-rows-[auto,1fr,auto] bg-background font-sans text-foreground antialiased",
           fonts.sans.variable,
           fonts.mono.variable,
         )}
       >
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

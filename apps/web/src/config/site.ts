@@ -1,18 +1,21 @@
+import packageJson from "../../package.json";
+
 export const siteConfig = {
-  name: "Acme",
-  url: "https://next-trpc-monorepo.vercel.app",
-  description: "Acme description",
-  keywords: "Acme",
+  name: "Aqua",
+  description: packageJson.description,
+  url: packageJson.homepage,
+  keywords: packageJson.keywords,
   links: {
     twitter: "https://twitter.com/fellipeutaka",
-    github: "https://github.com/fellipeutaka/next-trpc-monorepo",
+    github: packageJson.repository.url.replace(".git", ""),
   },
+  author: packageJson.author,
 };
 
 export const navLinks = [
-  { href: "/", label: "Server" },
-  { href: "/client", label: "Client" },
+  { href: "/events", title: "Events" },
+  { href: "/attendees", title: "Attendees" },
 ] satisfies {
   href: string;
-  label: string;
+  title: string;
 }[];

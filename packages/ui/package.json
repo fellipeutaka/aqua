@@ -5,6 +5,7 @@
     "./*": "./src/*.tsx"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.0.0",
     "sonner": "^1.4.41"
   },
   "devDependencies": {
