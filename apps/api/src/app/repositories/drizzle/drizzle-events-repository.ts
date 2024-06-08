@@ -9,6 +9,12 @@ import { DrizzleEventMapper } from "./mappers/drizzle-event-mapper";
 export class DrizzleEventsRepository implements EventsRepository {
   constructor(private readonly db: ReturnType<typeof getDb>) {}
 
+  async findMany() {
+    const data = await this.db.select().from(events);
+
+    return data.map(DrizzleEventMapper.toDomain);
+  }
+
   async findById(eventId: string) {
     const event = await this.db
       .select()
