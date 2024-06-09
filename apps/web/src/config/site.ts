@@ -12,10 +12,7 @@ export const siteConfig = {
   author: packageJson.author,
 };
 
-export const navLinks = [
-  { href: "/events", title: "Events" },
-  { href: "/attendees", title: "Attendees" },
-] satisfies {
+export const navLinks = [{ href: "/events", title: "Events" }] satisfies {
   href: string;
   title: string;
 }[];
